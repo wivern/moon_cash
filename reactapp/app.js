@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import IndexView from "./views/IndexView";
+import AccountsView from "./views/AccountView";
 
 injectTapEventPlugin();
 
@@ -14,6 +15,7 @@ class App extends React.Component{
         return <Router history={browserHistory}>
             <Route path="/" component={AppLayout}>
                 <IndexRoute component={IndexView} />
+                <Route path="/accounts" component={AccountsView} />
             </Route>
         </Router>;
     }
