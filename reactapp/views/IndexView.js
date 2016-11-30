@@ -4,6 +4,6 @@ import React from "react";
 
 export default class IndexView extends React.Component {
     render() {
-        return <div>Dashboard</div>;
+        return <div className="view">Dashboard</div>;
     }
 }

@@ -7,6 +7,7 @@ import {Router, Route, IndexRoute, browserHistory} from "react-router";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import IndexView from "./views/IndexView";
 import AccountsView from "./views/AccountView";
+import "./css/main.scss";
 
 injectTapEventPlugin();
 

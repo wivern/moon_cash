@@ -8,7 +8,7 @@ import AddIcon from "material-ui/svg-icons/content/add-circle";
 
 export default class AccountView extends React.Component {
     render() {
-        return <div>
+        return <div className="view">
             <muiThemeProvider>
                 <AccountList />
             </muiThemeProvider>
