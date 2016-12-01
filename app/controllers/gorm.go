@@ -1,0 +1,67 @@
+package controllers
+
+import (
+	"github.com/jinzhu/gorm"
+	_ "github.com/lib/pq" // my example for postgres
+	// short name for revel
+	r "github.com/revel/revel"
+	// YOUR APP NAME
+	"github.com/wivern/moon_cache/app/models"
+	"database/sql"
+	"fmt"
+	"github.com/robfig/revel"
+	"github.com/wivern/moon_cache/app"
+)
+
+type GormController struct {
+	*r.Controller
+	Txn *gorm.DB
+}
+
+var Gdb gorm.DB
+
+func InitDB() {
+	var err error
+	connstring := fmt.Sprintf("host=localhost user=%s password='%s' dbname=%s sslmode=disable", "postgres", "postgres", "moon-cash")
+	Gdb, err = gorm.Open("postgres", connstring)
+	if err != nil{
+		r.ERROR.Println("FATAL", err)
+		panic(err)
+	}
+	Gdb.AutoMigrate(&models.AccountType{})
+	Gdb.AutoMigrate(&models.Account{})
+}
+
+func (c *GormController) Begin() revel.Result {
+	txn := app.DB.Begin()
+	if (txn.Error != nil){
+		panic(txn.Error)
+	}
+	c.Txn = txn
+	return nil
+}
+
+func (c *GormController) Commit() revel.Result {
+	if c.Txn == nil {
+		return nil
+	}
+	c.Txn.Commit()
+	if err := c.Txn.Error; err != nil && err != sql.ErrTxDone{
+		panic(err)
+	}
+	c.Txn = nil
+	return nil
+}
+
+func (c*GormController) Rollback() revel.Result {
+	if c.Txn == nil {
+		return nil
+	}
+	c.Txn.Rollback()
+	if err := c.Txn.Error; err != nil && err != sql.ErrTxDone{
+		panic(err)
+	}
+	c.Txn = nil
+	return nil
+
+}
