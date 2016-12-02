@@ -7,7 +7,11 @@ module:testrunner
 GET     /                                       App.Index
 GET     /accounts                               App.Index
 
+# ACCOUNTS API
 GET     /api/accounts                           Accounts.List
+POST    /api/accounts                           Accounts.Create
+GET     /api/accounts/:id                       Accounts.Get
+PUT     /api/accounts/:id                       Accounts.Update
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

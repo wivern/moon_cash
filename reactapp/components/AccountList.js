@@ -4,8 +4,26 @@ import React from "react";
 import {List, ListItem} from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import Divider from "material-ui/Divider";
+import AccountActions from "../actions/AccountActions";
+import AccountStore from "../stores/AccountStore";
 
 export default class AccountList extends React.Component {
+    constructor(props){
+        super(props);
+        this.setState({accounts: null});
+        this.storeChanged = this.storeChanged.bind(this);
+    }
+    componentDidMount(){
+        AccountStore.listen(this.storeChanged);
+        AccountActions.list();
+    }
+    componentWillUnmount(){
+        AccountStore.unlisten(this.storeChanged);
+    }
+    storeChanged(state){
+        console.log('AccountList.storeChanged', state);
+        this.setState(state);
+    }
     render() {
         return <div>
             <List>

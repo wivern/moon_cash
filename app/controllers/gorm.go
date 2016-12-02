@@ -9,8 +9,6 @@ import (
 	"github.com/wivern/moon_cache/app/models"
 	"database/sql"
 	"fmt"
-	"github.com/robfig/revel"
-	"github.com/wivern/moon_cache/app"
 )
 
 type GormController struct {
@@ -23,7 +21,7 @@ var Gdb gorm.DB
 func InitDB() {
 	var err error
 	connstring := fmt.Sprintf("host=localhost user=%s password='%s' dbname=%s sslmode=disable", "postgres", "postgres", "moon-cash")
-	Gdb, err = gorm.Open("postgres", connstring)
+	Gdb, err := gorm.Open("postgres", connstring)
 	if err != nil{
 		r.ERROR.Println("FATAL", err)
 		panic(err)
@@ -32,8 +30,8 @@ func InitDB() {
 	Gdb.AutoMigrate(&models.Account{})
 }
 
-func (c *GormController) Begin() revel.Result {
-	txn := app.DB.Begin()
+func (c *GormController) Begin() r.Result {
+	txn := Gdb.Begin()
 	if (txn.Error != nil){
 		panic(txn.Error)
 	}
@@ -41,7 +39,7 @@ func (c *GormController) Begin() revel.Result {
 	return nil
 }
 
-func (c *GormController) Commit() revel.Result {
+func (c *GormController) Commit() r.Result {
 	if c.Txn == nil {
 		return nil
 	}
@@ -53,7 +51,7 @@ func (c *GormController) Commit() revel.Result {
 	return nil
 }
 
-func (c*GormController) Rollback() revel.Result {
+func (c*GormController) Rollback() r.Result {
 	if c.Txn == nil {
 		return nil
 	}
