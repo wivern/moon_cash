@@ -16,7 +16,7 @@ type GormController struct {
 	Txn *gorm.DB
 }
 
-var Gdb gorm.DB
+var Gdb *gorm.DB
 
 func InitDB() {
 	var err error
