@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/revel/revel"
-	"github.com/wivern/moon_cache/app/models"
+	"github.com/wivern/moon_cash/app/models"
 )
 
 type Accounts struct {

@@ -6,7 +6,7 @@ import (
 	// short name for revel
 	r "github.com/revel/revel"
 	// YOUR APP NAME
-	"github.com/wivern/moon_cache/app/models"
+	"github.com/wivern/moon_cash/app/models"
 	"database/sql"
 	"fmt"
 )
