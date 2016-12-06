@@ -13,6 +13,9 @@ POST    /api/accounts                           Accounts.Create
 GET     /api/accounts/:id                       Accounts.Get
 PUT     /api/accounts/:id                       Accounts.Update
 
+# ACCOUNT TYPES API
+GET  	/api/account_type						AccountTypes.List
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

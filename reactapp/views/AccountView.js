@@ -7,8 +7,12 @@ import RaisedButton from "material-ui/RaisedButton";
 import AddIcon from "material-ui/svg-icons/content/add-circle";
 import {Popover, PopoverAnimationVertical} from "material-ui/Popover";
 import Formsy from "formsy-react";
-import {FormsyText} from "formsy-material-ui/lib";
+import {FormsyText, FormsySelect} from "formsy-material-ui/lib";
+import MenuItem from "material-ui/MenuItem";
 import Subheader from "material-ui/Subheader";
+import AccountTypeStore from "../stores/AccountTypeStore";
+import AccountTypeActions from "../actions/AccountTypeActions";
+import AccountActions from '../actions/AccountActions';
 
 const style = {
     popover: {
@@ -19,22 +23,48 @@ const style = {
 export default class AccountView extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {newAccount: false};
+        this.state = {newAccount: false, types: []};
+        this.onStoreChanged = this.onStoreChanged.bind(this);
+    }
+
+    componentDidMount(){
+        AccountTypeStore.listen(this.onStoreChanged);
+        AccountTypeActions.fetch.defer();
+    }
+
+    componentWillUnmount(){
+        AccountTypeStore.unlisten(this.onStoreChanged);
+    }
+
+    onStoreChanged(state){
+        console.log("AccountView.onStoreChanged", state);
+        this.setState(state);
     }
 
     onNewAccountRequest(event) {
         this.setState({newAccount: true, targetEl: event.target})
     }
 
-    onNewAccount() {
-
+    onNewAccount(data) {
+        console.log('AccountView.onNewAccount', data);
+        AccountActions.create(data);
+        this.setState({newAccount: false});
     }
 
     onRequestClose(event) {
         this.setState({newAccount: false});
     }
 
+    enableButtons(){
+        this.setState({accountValid: true});
+    }
+
+    disableButtons(){
+        this.setState({accountValid: false});
+    }
+
     render() {
+        const types = this.state.types.map(t => <MenuItem value={t.ID} primaryText={t.Name} />)
         return <div className="view">
             <muiThemeProvider>
                 <AccountList />
@@ -50,9 +80,14 @@ export default class AccountView extends React.Component {
                      animation={PopoverAnimationVertical}>
                 <div style={style.popover}>
                     <Subheader>New account</Subheader>
-                    <Formsy.Form>
-                        <FormsyText name="name" required validations="isWords" floatingLabelText="Account name"/><br />
-                        <RaisedButton label="Add" primary={true} onTouchTap={this.onNewAccount.bind(this)}/>
+                    <Formsy.Form onValid={this.enableButtons.bind(this)}
+                            onInvalid={this.disableButtons.bind(this)}
+                            onValidSubmit={this.onNewAccount.bind(this)}>
+                        <FormsyText required name="Name" required validations="isWords" floatingLabelText="Account name"/><br />
+                        <FormsySelect required name="AccountTypeID" floatingLabelText="Account type">
+                            {types}
+                        </FormsySelect><br />
+                        <RaisedButton label="Add" disabled={!this.state.accountValid} primary={true} type="submit" />
                         <RaisedButton style={{marginLeft: '10px'}} label="Cancel" secondary={true}
                                       onTouchTap={this.onRequestClose.bind(this)}/> <br />
                     </Formsy.Form>

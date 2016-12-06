@@ -16,7 +16,7 @@ type GormController struct {
 	Txn *gorm.DB
 }
 
-var Gdb *gorm.DB
+var db *gorm.DB
 
 func InitDB() {
 	var err error
@@ -28,10 +28,12 @@ func InitDB() {
 	}
 	Gdb.AutoMigrate(&models.AccountType{})
 	Gdb.AutoMigrate(&models.Account{})
+	db = Gdb
 }
 
 func (c *GormController) Begin() r.Result {
-	txn := Gdb.Begin()
+	fmt.Println(db)
+	txn := db.Begin()
 	if (txn.Error != nil){
 		panic(txn.Error)
 	}

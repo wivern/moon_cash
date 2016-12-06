@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"io/ioutil"
+	"encoding/json"
 	"github.com/revel/revel"
 	"github.com/wivern/moon_cash/app/models"
 )
@@ -16,13 +18,20 @@ type DeleteResponse struct {
 
 func (c Accounts) List() revel.Result {
 	var accounts []models.Account
-	c.Txn.Find(&accounts)
+	c.Txn.Preload("AccountType").Find(&accounts)
 	return c.RenderJson(accounts)
 }
 
-func (c Accounts) Create(account models.Account) revel.Result{
-	revel.INFO.Println("Creating account: " + account.Name)
-	Gdb.Create(account)
+func (c Accounts) Create() revel.Result{
+	var account models.Account
+	content, _ := ioutil.ReadAll(c.Request.Body)
+	err := json.Unmarshal([]byte(content), &account)
+	if err != nil{
+		revel.ERROR.Println("ERROR", err)
+		panic(err)
+	}
+	revel.INFO.Println("Creating account", account)
+	c.Txn.Create(&account)
 	return c.RenderJson(account)
 }
 

@@ -1,6 +1,10 @@
 package models
 
+import (
+	"github.com/jinzhu/gorm"
+)
+
 type AccountType struct {
-	Id 		int64
+	gorm.Model
 	Name		string
 }
