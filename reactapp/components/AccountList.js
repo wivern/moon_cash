@@ -27,16 +27,23 @@ export default class AccountList extends React.Component {
     }
     render() {
         const accounts = this.state.accounts;
-        const types = {};
+        const types = [];
         accounts.forEach(a => {
-            if (!_.has(types, a.AccountType.ID)){
-                types[a.AccountType.ID] = a.AccountType;
-                types[a.AccountType.ID].accounts = [];
+            let type = types.find(t => t.ID === a.AccountType.ID);
+            if (!type){
+                type = _.clone(a.AccountType);
+                type.accounts = [];
+                types.push(type);
             }
-            types[a.AccountType.ID].accounts.push(a);
+            type.accounts.push(a);
+        });
+        const items = types.map(t => {
+            const accs = t.accounts.map(a => <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р." />);
+            return <div><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List><Divider inset={true} /></div>;
         });
 
         return <div>
+            {items}
             <List>
                 <Subheader inset={true}>SAVINGS</Subheader>
                 <ListItem primaryText={<p>Alfabank savings</p>} secondaryText={<p>150,000 р.</p>}/>
