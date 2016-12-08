@@ -12,7 +12,7 @@ import MenuItem from "material-ui/MenuItem";
 import Subheader from "material-ui/Subheader";
 import AccountTypeStore from "../stores/AccountTypeStore";
 import AccountTypeActions from "../actions/AccountTypeActions";
-import AccountActions from '../actions/AccountActions';
+import AccountActions from "../actions/AccountActions";
 
 const style = {
     popover: {
@@ -27,16 +27,16 @@ export default class AccountView extends React.Component {
         this.onStoreChanged = this.onStoreChanged.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         AccountTypeStore.listen(this.onStoreChanged);
         AccountTypeActions.fetch.defer();
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         AccountTypeStore.unlisten(this.onStoreChanged);
     }
 
-    onStoreChanged(state){
+    onStoreChanged(state) {
         console.log("AccountView.onStoreChanged", state);
         this.setState(state);
     }
@@ -55,44 +55,47 @@ export default class AccountView extends React.Component {
         this.setState({newAccount: false});
     }
 
-    enableButtons(){
+    enableButtons() {
         this.setState({accountValid: true});
     }
 
-    disableButtons(){
+    disableButtons() {
         this.setState({accountValid: false});
     }
 
     render() {
-        const types = this.state.types.map(t => <MenuItem value={t.ID} primaryText={t.Name} />)
+        const types = this.state.types.map(t => <MenuItem value={t.ID} primaryText={t.Name}/>)
         return <div className="view">
             <muiThemeProvider>
                 <AccountList />
             </muiThemeProvider>
             <RaisedButton label="Add account" primary={true} icon={<AddIcon />}
                           onTouchTap={this.onNewAccountRequest.bind(this)}/>
-            <Popover open={this.state.newAccount}
-                     anchorEl={this.state.anchorEl}
-                     anchorOrigin={{horizontal: 'left', vertical: 'top'}}
-                     targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
-                     onRequestClose={this.onRequestClose.bind(this)}
-                     useLayerForClickAway={true}
-                     animation={PopoverAnimationVertical}>
-                <div style={style.popover}>
-                    <Subheader>New account</Subheader>
-                    <Formsy.Form onValid={this.enableButtons.bind(this)}
-                            onInvalid={this.disableButtons.bind(this)}
-                            onValidSubmit={this.onNewAccount.bind(this)}>
-                        <FormsyText required name="Name" required validations="isWords" floatingLabelText="Account name"/><br />
-                        <FormsySelect required name="AccountTypeID" floatingLabelText="Account type">
-                            {types}
-                        </FormsySelect><br />
-                        <RaisedButton label="Add" disabled={!this.state.accountValid} primary={true} type="submit" />
-                        <RaisedButton style={{marginLeft: '10px'}} label="Cancel" secondary={true}
-                                      onTouchTap={this.onRequestClose.bind(this)}/> <br />
-                    </Formsy.Form>
-                </div>
-            </Popover>
+            <muiThemeProvider>
+                <Popover open={this.state.newAccount}
+                         anchorEl={this.state.anchorEl}
+                         anchorOrigin={{horizontal: 'left', vertical: 'top'}}
+                         targetOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                         onRequestClose={this.onRequestClose.bind(this)}
+                         useLayerForClickAway={true}
+                         animation={PopoverAnimationVertical}>
+                    <div style={style.popover}>
+                        <Subheader>New account</Subheader>
+                        <Formsy.Form onValid={this.enableButtons.bind(this)}
+                                     onInvalid={this.disableButtons.bind(this)}
+                                     onValidSubmit={this.onNewAccount.bind(this)}>
+                            <FormsyText required name="Name" validations="isWords"
+                                        floatingLabelText="Account name"/><br />
+                            <FormsySelect required name="AccountTypeID" floatingLabelText="Account type">
+                                {types}
+                            </FormsySelect><br />
+                            <RaisedButton label="Add" disabled={!this.state.accountValid} primary={true} type="submit"/>
+                            <RaisedButton style={{marginLeft: '10px'}} label="Cancel" secondary={true}
+                                          onTouchTap={this.onRequestClose.bind(this)}/> <br />
+                        </Formsy.Form>
+                    </div>
+                </Popover>
+            </muiThemeProvider>
         </div>;
     }
 }

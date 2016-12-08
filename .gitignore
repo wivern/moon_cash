@@ -2,3 +2,6 @@ test-results/
 tmp/
 routes/
 reactapp/node_modules/
+public/js/Main.js
+public/js/Main.js.map
+.idea/
