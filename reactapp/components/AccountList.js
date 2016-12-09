@@ -7,6 +7,25 @@ import Divider from "material-ui/Divider";
 import AccountActions from "../actions/AccountActions";
 import AccountStore from "../stores/AccountStore";
 import _ from "underscore";
+import IconMenu from "material-ui/IconMenu";
+import MenuItem from "material-ui/MenuItem";
+import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+import IconButton from "material-ui/IconButton";
+
+const iconButtonElement = (
+    <IconButton touch={true} tooltip="more actions" tooltipPosition="bottom-left">
+        <MoreVertIcon />
+    </IconButton>
+);
+
+const rightIconMenu = (
+    <IconMenu iconButtonElement={iconButtonElement}>
+        <MenuItem>Add transaction</MenuItem>
+        <MenuItem>Edit</MenuItem>
+        <Divider />
+        <MenuItem>Delete</MenuItem>
+    </IconMenu>
+);
 
 export default class AccountList extends React.Component {
     constructor(props){
@@ -37,23 +56,18 @@ export default class AccountList extends React.Component {
             }
             type.accounts.push(a);
         });
-        const items = types.map(t => {
-            const accs = t.accounts.map(a => <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р." />);
-            return <div><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List><Divider inset={true} /></div>;
+        const items = types.map((t, index) => {
+            const accs = t.accounts.map(a => <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р." rightIconButton={rightIconMenu} />);
+            if (index < types.length - 1) {
+                return <div><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List><Divider inset={true}/>
+                </div>;
+            } else {
+                return <div><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List></div>;
+            }
         });
 
         return <div>
             {items}
-            <List>
-                <Subheader inset={true}>SAVINGS</Subheader>
-                <ListItem primaryText={<p>Alfabank savings</p>} secondaryText={<p>150,000 р.</p>}/>
-            </List>
-            <Divider inset={true}/>
-            <List>
-                <Subheader inset={true}>CREDIT CARD</Subheader>
-                <ListItem primaryText={<p>Sberbank VISA</p>}/>
-                <ListItem primaryText={<p>Citybank MASTERCARD</p>}/>
-            </List>
         </div>;
     }
 }

@@ -32,6 +32,7 @@ func (c Accounts) Create() revel.Result{
 	}
 	revel.INFO.Println("Creating account", account)
 	c.Txn.Create(&account)
+	c.Txn.Preload("AccountType").Find(&account, account.ID)
 	return c.RenderJson(account)
 }
 
