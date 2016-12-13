@@ -66,7 +66,7 @@ export default class AccountList extends React.Component {
             }
         });
 
-        return <div>
+        return <div className="accountList">
             {items}
         </div>;
     }

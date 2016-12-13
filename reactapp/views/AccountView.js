@@ -84,7 +84,7 @@ export default class AccountView extends React.Component {
                         <Formsy.Form onValid={this.enableButtons.bind(this)}
                                      onInvalid={this.disableButtons.bind(this)}
                                      onValidSubmit={this.onNewAccount.bind(this)}>
-                            <FormsyText required name="Name" validations="isWords"
+                            <FormsyText required name="Name"
                                         floatingLabelText="Account name"/><br />
                             <FormsySelect required name="AccountTypeID" floatingLabelText="Account type">
                                 {types}
