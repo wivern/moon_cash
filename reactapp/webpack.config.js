@@ -25,7 +25,7 @@ module.exports = {
                 loader: 'url?limit=10000&name=fonts/[name].[ext]'
             },
             {
-                test: /\.scss$/,
+                test: /\.(scss|css)$/,
                 loader: 'style!css?sourceMap!sass?sourceMap'
             }
         ]

@@ -4,12 +4,12 @@ import React from "react";
 import {List, ListItem} from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import Divider from "material-ui/Divider";
-import AccountActions from "../actions/AccountActions";
-import AccountStore from "../stores/AccountStore";
+import AccountActions from "../../actions/AccountActions";
+import AccountStore from "../../stores/AccountStore";
 import _ from "underscore";
 import IconMenu from "material-ui/IconMenu";
 import MenuItem from "material-ui/MenuItem";
-import MoreVertIcon from "material-ui/svg-icons/navigation/more-vert";
+import MoreVertIcon from "../../node_modules/material-ui/svg-icons/navigation/more-vert";
 import IconButton from "material-ui/IconButton";
 
 const iconButtonElement = (

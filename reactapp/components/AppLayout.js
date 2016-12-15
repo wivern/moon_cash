@@ -1,7 +1,7 @@
 'use strict';
 
 import React from "react";
-import {Toolbar, ToolbarGroup} from "material-ui/Toolbar";
+import {Toolbar, ToolbarGroup, ToolbarTitle} from "material-ui/Toolbar";
 import IconButton from "material-ui/IconButton";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import MenuIcon from "material-ui/svg-icons/navigation/menu";
@@ -50,6 +50,7 @@ class AppLayout extends React.Component {
                 <Toolbar>
                     <ToolbarGroup firstChild={true}>
                         <IconButton onTouchTap={this.onMenu.bind(this)}><MenuIcon /></IconButton>
+                        <ToolbarTitle text="MOON CASH" />
                     </ToolbarGroup>
                 </Toolbar>
             </MuiThemeProvider>

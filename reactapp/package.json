@@ -9,6 +9,8 @@
   "author": "Vitaly Koulakov",
   "license": "MIT",
   "dependencies": {
+    "ag-grid" : "~7.0.2",
+    "ag-grid-react" : "7.0.0",
     "alt" : "~0.18.2",
     "alt-utils" : "^1.0.0",
     "react": "~15.4.1",

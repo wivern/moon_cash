@@ -1,7 +1,7 @@
 'use strict';
 
 import React from "react";
-import AccountList from "../components/AccountList";
+import AccountList from "../components/account/AccountList";
 import muiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import RaisedButton from "material-ui/RaisedButton";
 import AddIcon from "material-ui/svg-icons/content/add-circle";
