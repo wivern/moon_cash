@@ -18,15 +18,6 @@ const iconButtonElement = (
     </IconButton>
 );
 
-const rightIconMenu = (
-    <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem>Add transaction</MenuItem>
-        <MenuItem>Edit</MenuItem>
-        <Divider />
-        <MenuItem>Delete</MenuItem>
-    </IconMenu>
-);
-
 export default class AccountList extends React.Component {
     constructor(props){
         super(props);
@@ -44,6 +35,18 @@ export default class AccountList extends React.Component {
         console.log('AccountList.storeChanged', state);
         this.setState(state);
     }
+    onItemDelete(account){
+        console.log('AccountList.onItemDelete', account);
+        if (_.isFunction(this.props.onDelete)){
+            this.props.onDelete(account);
+        }
+    }
+    onItemOpen(account){
+        console.log('AccountList.onItemOpen', account);
+        if (_.isFunction(this.props.onOpen)){
+            this.props.onOpen(account);
+        }
+    }
     render() {
         const accounts = this.state.accounts;
         const types = [];
@@ -57,12 +60,24 @@ export default class AccountList extends React.Component {
             type.accounts.push(a);
         });
         const items = types.map((t, index) => {
-            const accs = t.accounts.map(a => <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р." rightIconButton={rightIconMenu} />);
+            const accs = t.accounts.map(a => {
+                const rightIconMenu = (
+                    <IconMenu iconButtonElement={iconButtonElement}>
+                        <MenuItem key="add" primaryText="Add transaction" />
+                        <MenuItem key="edit" primaryText="Edit" />
+                        <Divider />
+                        <MenuItem key="delete" onTouchTap={this.onItemDelete.bind(this, a)} primaryText="Delete" />
+                    </IconMenu>
+                );
+                return <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р."
+                                 onTouchTap={this.onItemOpen.bind(this, a)}
+                                 rightIconButton={rightIconMenu} />
+            });
             if (index < types.length - 1) {
-                return <div><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List><Divider inset={true}/>
+                return <div key={t.ID}><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List><Divider inset={true}/>
                 </div>;
             } else {
-                return <div><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List></div>;
+                return <div key={t.ID}><List><Subheader inset={true}>{t.Name}</Subheader>{accs}</List></div>;
             }
         });
 

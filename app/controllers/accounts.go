@@ -13,7 +13,7 @@ type Accounts struct {
 
 type DeleteResponse struct {
 	deletedId int64
-	message string
+	message   string
 }
 
 func (c Accounts) List() revel.Result {
@@ -22,11 +22,11 @@ func (c Accounts) List() revel.Result {
 	return c.RenderJson(accounts)
 }
 
-func (c Accounts) Create() revel.Result{
+func (c Accounts) Create() revel.Result {
 	var account models.Account
 	content, _ := ioutil.ReadAll(c.Request.Body)
 	err := json.Unmarshal([]byte(content), &account)
-	if err != nil{
+	if err != nil {
 		revel.ERROR.Println("ERROR", err)
 		panic(err)
 	}
@@ -51,7 +51,7 @@ func (c Accounts) Update(account models.Account) revel.Result {
 func (c Accounts) Delete(id int64) revel.Result {
 	c.Txn.Where("Id = ?", id).Delete(&models.Account{})
 	return c.RenderJson(DeleteResponse{
-		deletedId:id,
+		deletedId: id,
 		message:"Account deleted",
 	})
 }

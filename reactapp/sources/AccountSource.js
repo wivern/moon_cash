@@ -23,7 +23,7 @@ const AccountSource = {
     update(account){
         return new Promise(function (resolve, reject) {
             const client = rest.wrap(mime).wrap(errorCode);
-            client({path: API + '/{id}', params: {'id': account.Id}, method: 'PUT',
+            client({path: API + '/{id}', params: {'id': account.ID}, method: 'PUT',
                 headers: {'Content-Type': 'application/json'}, entity: account})
                 .then(response => resolve(response.entity), error => reject(error.entity));
         });
@@ -31,7 +31,7 @@ const AccountSource = {
     remove(account){
         return new Promise(function (resolve, reject) {
             const client = rest.wrap(mime).wrap(errorCode);
-            client({path: API + '/{id}', params: {'id': account.Id}, method: 'DELETE'})
+            client({path: API + '/{id}', params: {'id': account.ID}, method: 'DELETE'})
                 .then(response => resolve(response.entity), error => reject(error.entity));
         })
     }

@@ -6,12 +6,14 @@ module:testrunner
 
 GET     /                                       App.Index
 GET     /accounts                               App.Index
+GET     /accounts/:id                           App.Index
 
 # ACCOUNTS API
 GET     /api/accounts                           Accounts.List
 POST    /api/accounts                           Accounts.Create
 GET     /api/accounts/:id                       Accounts.Get
 PUT     /api/accounts/:id                       Accounts.Update
+DELETE  /api/accounts/:id                       Accounts.Delete
 
 # ACCOUNT TYPES API
 GET  	/api/account_type						AccountTypes.List

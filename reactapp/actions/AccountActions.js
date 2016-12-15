@@ -41,7 +41,7 @@ class AccountActions{
     remove(account){
         return dispatch => {
             dispatch();
-            AccountSource.remove(account).then(account => this.accountDeleted(account), error => this.failed(error));
+            AccountSource.remove(account).then(result => this.accountDeleted(account), error => this.failed(error));
         }
     }
 }

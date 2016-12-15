@@ -20,7 +20,11 @@ var db *gorm.DB
 
 func InitDB() {
 	var err error
-	connstring := fmt.Sprintf("host=localhost user=%s password='%s' dbname=%s sslmode=disable", "postgres", "postgres", "moon-cash")
+	host := r.Config.StringDefault("db.host", "localhost")
+	dbUser := r.Config.StringDefault("db.username", "postgres")
+	dbPassword := r.Config.StringDefault("db.password", "postgres")
+	dbName := r.Config.StringDefault("db.name", "moon-cash")
+	connstring := fmt.Sprintf("host=%s user=%s password='%s' dbname=%s sslmode=disable", host, dbUser, dbPassword, dbName)
 	Gdb, err := gorm.Open("postgres", connstring)
 	if err != nil{
 		r.ERROR.Println("FATAL", err)
