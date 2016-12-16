@@ -3,6 +3,11 @@
 import React from "react";
 import TransactionList from "../components/transaction/TransactionList";
 import RaisedButton from "material-ui/RaisedButton";
+import AccountStore from "../stores/AccountStore";
+import AccountActions from "../actions/AccountActions";
+import AccountIcon from "material-ui/svg-icons/action/account-balance";
+import {blue800} from "material-ui/styles/colors";
+import TransactionDialog from "../components/transaction/TransactionDialog";
 
 const styles = {
     panel: {
@@ -14,15 +19,47 @@ const styles = {
 };
 
 export default class AccountDetailsView extends React.Component {
-    constructor(props){
+    constructor(props) {
         super(props);
+        this.state = {account: AccountStore.getAccount(this.props.params.id)};
+        this.onStoreChanged = this.onStoreChanged.bind(this);
     }
+
+    componentDidMount() {
+        AccountStore.listen(this.onStoreChanged);
+        if (!this.state.account) {
+            AccountActions.list();
+        }
+    }
+
+    componentWillUnmount() {
+        AccountStore.unlisten(this.onStoreChanged);
+    }
+
+    onStoreChanged(state) {
+        this.setState({account: AccountStore.getAccount(this.props.params.id)});
+    }
+
+    onAddRequest(){
+        this.setState({dialogOpen: true});
+    }
+
     render() {
+        const account = this.state.account;
+        const titleBar = account ? <div className="titlePanel">
+                <AccountIcon viewBox="32 32" color={blue800} style={{verticalAlign: 'text-bottom'}} />
+                <h3 style={{display: 'inline', color: '#1565C0', marginLeft: '20px'}}>{account.Name}</h3>
+            </div> : null;
+
         return <div className="fullheight">
+            {titleBar}
             <div style={styles.panel}>
-                <RaisedButton style={styles.button} label="Add transaction" />
+                <RaisedButton style={styles.button} primary={true}
+                              onTouchTap={this.onAddRequest.bind(this)}
+                              label="Add transaction"/>
             </div>
-            <TransactionList />
+            <TransactionDialog open={this.state.dialogOpen} onHandleClose={() => this.setState({dialogOpen: false})} />
+            <TransactionList account={this.state.account}/>
         </div>;
     }
 }

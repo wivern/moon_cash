@@ -32,6 +32,7 @@ func InitDB() {
 	}
 	Gdb.AutoMigrate(&models.AccountType{})
 	Gdb.AutoMigrate(&models.Account{})
+	Gdb.AutoMigrate(&models.Transaction{})
 	db = Gdb
 }
 
