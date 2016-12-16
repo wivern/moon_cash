@@ -4,6 +4,8 @@ import React from "react";
 import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import _ from "underscore";
+import {Form} from "formsy-react";
+import {FormsyText, FormsyRadioGroup, FormsyRadio} from "formsy-material-ui";
 
 export default class TransactionDialog extends React.Component {
     handleClose(){
@@ -30,6 +32,16 @@ export default class TransactionDialog extends React.Component {
                        actions={actions}
                        onRequestClose={this.handleClose.bind(this)}
                        modal={false}>
+            <Form>
+                <FormsyRadioGroup name="type">
+                    <FormsyRadio value="expense" label="Expense" />
+                    <FormsyRadio value="income" label="Income" />
+                    <FormsyRadio value="transfer" label="Tramsfer" />
+                    <FormsyRadio value="income" label="Income" />
+                </FormsyRadioGroup>
+                <FormsyText name="description" floatingLabelText="Description" /><br />
+                <FormsyText name="amount" floatingLabelText="Amount" /><br />
+            </Form>
         </Dialog>;
     }
 }

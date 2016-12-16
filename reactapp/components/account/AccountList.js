@@ -61,14 +61,14 @@ export default class AccountList extends React.Component {
         });
         const items = types.map((t, index) => {
             const accs = t.accounts.map(a => {
-                const rightIconMenu = (
+                const rightIconMenu = !this.props.disableMenu ? (
                     <IconMenu iconButtonElement={iconButtonElement}>
                         <MenuItem key="add" primaryText="Add transaction" />
                         <MenuItem key="edit" primaryText="Edit" />
                         <Divider />
                         <MenuItem key="delete" onTouchTap={this.onItemDelete.bind(this, a)} primaryText="Delete" />
                     </IconMenu>
-                );
+                ) : null;
                 return <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р."
                                  onTouchTap={this.onItemOpen.bind(this, a)}
                                  rightIconButton={rightIconMenu} />

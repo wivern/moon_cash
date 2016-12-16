@@ -70,9 +70,9 @@ export default class AccountDetailsView extends React.Component {
                      anchorEl={this.state.anchorEl}
                      anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
                      targetOrigin={{horizontal: 'left', vertical: 'top'}}
-                     style={{width: '200px'}}
+                     style={{width: '250px'}}
                      onRequestClose={this.handleRequestClose.bind(this)}>
-                <AccountList />
+                <AccountList disableMenu={true} />
             </Popover>
             <div style={styles.panel}>
                 <RaisedButton style={styles.button} primary={true}
