@@ -8,6 +8,9 @@ import AccountActions from "../actions/AccountActions";
 import AccountIcon from "material-ui/svg-icons/action/account-balance";
 import {blue800} from "material-ui/styles/colors";
 import TransactionDialog from "../components/transaction/TransactionDialog";
+import FlatButton from "material-ui/FlatButton";
+import Popover from "material-ui/Popover";
+import AccountList from "../components/account/AccountList";
 
 const styles = {
     panel: {
@@ -44,15 +47,33 @@ export default class AccountDetailsView extends React.Component {
         this.setState({dialogOpen: true});
     }
 
+    handleRequestClose(){
+        this.setState({open: false});
+    }
+
+    onPopover(event){
+        this.setState({open: true, anchorEl: event.currentTarget});
+    }
+
     render() {
         const account = this.state.account;
         const titleBar = account ? <div className="titlePanel">
-                <AccountIcon viewBox="32 32" color={blue800} style={{verticalAlign: 'text-bottom'}} />
-                <h3 style={{display: 'inline', color: '#1565C0', marginLeft: '20px'}}>{account.Name}</h3>
+                <AccountIcon viewBox="32 32" color={blue800} style={{verticalAlign: 'middle'}} />
+                <FlatButton labelStyle={{color: '#1565C8'}} style={{marginLeft: '10px'}}
+                            onTouchTap={this.onPopover.bind(this)}
+                            label={account.Name} />
             </div> : null;
 
         return <div className="fullheight">
             {titleBar}
+            <Popover open={this.state.open}
+                     anchorEl={this.state.anchorEl}
+                     anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                     targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                     style={{width: '200px'}}
+                     onRequestClose={this.handleRequestClose.bind(this)}>
+                <AccountList />
+            </Popover>
             <div style={styles.panel}>
                 <RaisedButton style={styles.button} primary={true}
                               onTouchTap={this.onAddRequest.bind(this)}
