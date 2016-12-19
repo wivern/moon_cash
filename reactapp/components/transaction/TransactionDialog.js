@@ -5,19 +5,21 @@ import Dialog from "material-ui/Dialog";
 import FlatButton from "material-ui/FlatButton";
 import _ from "underscore";
 import {Form} from "formsy-react";
-import {FormsyText, FormsyRadioGroup, FormsyRadio} from "formsy-material-ui";
+import {FormsyText, FormsyRadioGroup, FormsyRadio, FormsyDate} from "formsy-material-ui";
+import View from "react-flexbox-ui";
 
 export default class TransactionDialog extends React.Component {
-    handleClose(){
-        if (_.isFunction(this.props.onHandleClose)){
+    handleClose() {
+        if (_.isFunction(this.props.onHandleClose)) {
             this.props.onHandleClose();
         }
     }
+
     render() {
         const actions = [
             <FlatButton
                 label="Cancel"
-                primary={true}
+                secondary={true}
                 onTouchTap={this.handleClose.bind(this)}
             />,
             <FlatButton
@@ -34,13 +36,20 @@ export default class TransactionDialog extends React.Component {
                        modal={false}>
             <Form>
                 <FormsyRadioGroup name="type">
-                    <FormsyRadio value="expense" label="Expense" />
-                    <FormsyRadio value="income" label="Income" />
-                    <FormsyRadio value="transfer" label="Tramsfer" />
-                    <FormsyRadio value="income" label="Income" />
+                    <FormsyRadio value="expense" label="Expense"/>
+                    <FormsyRadio value="income" label="Income"/>
+                    <FormsyRadio value="transfer" label="Tramsfer"/>
+                    <FormsyRadio value="refund" label="Refund"/>
                 </FormsyRadioGroup>
-                <FormsyText name="description" floatingLabelText="Description" /><br />
-                <FormsyText name="amount" floatingLabelText="Amount" /><br />
+                <View row expand alignStart>
+                    <View column>
+                        <FormsyText name="description" floatingLabelText="Description"/><br />
+                        <FormsyText name="amount" floatingLabelText="Amount"/><br />
+                    </View>
+                    <View column>
+                        <FormsyDate name="date" floatingLabelText="Date"/>
+                    </View>
+                </View>
             </Form>
         </Dialog>;
     }
