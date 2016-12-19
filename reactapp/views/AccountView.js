@@ -13,6 +13,7 @@ import Subheader from "material-ui/Subheader";
 import AccountTypeStore from "../stores/AccountTypeStore";
 import AccountTypeActions from "../actions/AccountTypeActions";
 import AccountActions from "../actions/AccountActions";
+import FlatButton from "material-ui/FlatButton";
 
 const style = {
     popover: {
@@ -76,7 +77,6 @@ class AccountView extends React.Component {
     }
 
     render() {
-        const types = this.state.types.map(t => <MenuItem key={t.ID} value={t.ID} primaryText={t.Name}/>)
         return <div className="view">
             <muiThemeProvider>
                 <AccountList
@@ -103,14 +103,15 @@ class AccountView extends React.Component {
                             <FormsySelect required name="AccountTypeID" floatingLabelText="Account type">
                                 {types}
                             </FormsySelect><br />
-                            <RaisedButton label="Add" disabled={!this.state.accountValid} primary={true} type="submit"/>
-                            <RaisedButton style={{marginLeft: '10px'}} label="Cancel" secondary={true}
-                                          onTouchTap={this.onRequestClose.bind(this)}/> <br />
+                            <FlatButton style={{marginLeft: '10px'}} label="Cancel" secondary={true}
+                                          onTouchTap={this.onRequestClose.bind(this)}/>
+                            <FlatButton label="Add" disabled={!this.state.accountValid} primary={true} type="submit"/> <br/>
                         </Formsy.Form>
                     </div>
                 </Popover>
             </muiThemeProvider>
         </div>;
+        const types = this.state.types.map(t => <MenuItem key={t.ID} value={t.ID} primaryText={t.Name}/>)
     }
 }
 
