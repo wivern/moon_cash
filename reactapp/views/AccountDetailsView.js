@@ -54,6 +54,10 @@ export default class AccountDetailsView extends React.Component {
     onPopover(event){
         this.setState({open: true, anchorEl: event.currentTarget});
     }
+    onAddTransaction(data){
+        console.log('AccountDetailsView.onAddTransaction', data);
+        this.setState({dialogOpen: false});
+    }
 
     render() {
         const account = this.state.account;
@@ -79,7 +83,9 @@ export default class AccountDetailsView extends React.Component {
                               onTouchTap={this.onAddRequest.bind(this)}
                               label="Add transaction"/>
             </div>
-            <TransactionDialog open={this.state.dialogOpen} onHandleClose={() => this.setState({dialogOpen: false})} />
+            <TransactionDialog open={this.state.dialogOpen}
+                               onSubmit={this.onAddTransaction.bind(this)}
+                               onHandleClose={() => this.setState({dialogOpen: false})} />
             <TransactionList account={this.state.account}/>
         </div>;
     }
