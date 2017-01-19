@@ -49,8 +49,7 @@ export default class TransactionDialog extends React.Component {
             <Form ref={(form) => this.formsyForm = form}
                   onValid={() => this.setState({formValid: true})}
                   onInvalid={() => this.setState({formValid: false})}
-                  onValidSubmit={this.onSubmit.bind(this)}
-            >
+                  onValidSubmit={this.onSubmit.bind(this)}>
                 <FormsyRadioGroup defaultSelected="expense" name="type">
                     <FormsyRadio value="expense" label="Expense"/>
                     <FormsyRadio value="income" label="Income"/>
