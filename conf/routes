@@ -18,6 +18,9 @@ DELETE  /api/accounts/:id                       Accounts.Delete
 # ACCOUNT TYPES API
 GET  	/api/account_type						AccountTypes.List
 
+# TRANSACTION API
+GET     /api/accounts/:id/transactions          Transactions.List
+
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

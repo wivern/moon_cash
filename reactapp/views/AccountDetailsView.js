@@ -21,7 +21,7 @@ const styles = {
     }
 };
 
-export default class AccountDetailsView extends React.Component {
+class AccountDetailsView extends React.Component {
     constructor(props) {
         super(props);
         this.state = {account: AccountStore.getAccount(this.props.params.id)};
@@ -37,6 +37,10 @@ export default class AccountDetailsView extends React.Component {
 
     componentWillUnmount() {
         AccountStore.unlisten(this.onStoreChanged);
+    }
+
+    componentWillReceiveProps(nextProps){
+        this.setState({account: AccountStore.getAccount(nextProps.params.id)});
     }
 
     onStoreChanged(state) {
@@ -58,6 +62,14 @@ export default class AccountDetailsView extends React.Component {
         console.log('AccountDetailsView.onAddTransaction', data);
         this.setState({dialogOpen: false});
     }
+    onAccountOpen(account){
+        console.log('AccountDetailsView.onAccountOpen', account);
+        const router = this.context.router;
+        if (router) {
+            router.push("/accounts/" + account.ID);
+            this.setState({open: false});
+        }
+    }
 
     render() {
         const account = this.state.account;
@@ -76,7 +88,7 @@ export default class AccountDetailsView extends React.Component {
                      targetOrigin={{horizontal: 'left', vertical: 'top'}}
                      style={{width: '250px'}}
                      onRequestClose={this.handleRequestClose.bind(this)}>
-                <AccountList disableMenu={true} />
+                <AccountList disableMenu={true} onOpen={this.onAccountOpen.bind(this)} />
             </Popover>
             <div style={styles.panel}>
                 <RaisedButton style={styles.button} primary={true}
@@ -90,3 +102,9 @@ export default class AccountDetailsView extends React.Component {
         </div>;
     }
 }
+
+AccountDetailsView.contextTypes = {
+    router: React.PropTypes.object
+};
+
+export default AccountDetailsView;
