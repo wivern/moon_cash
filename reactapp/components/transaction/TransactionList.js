@@ -1,20 +1,43 @@
 'use strict';
 
-import React from 'react';
-import {AgGridReact} from 'ag-grid-react';
+import React from "react";
+import {AgGridReact} from "ag-grid-react";
+import TransactionActions from "../../actions/TransactionActions";
+import TransactionStore from "../../stores/TransactionStore";
 
 const columns = [
-    {headerName: 'Date', field: 'date'},
-    {headerName: 'Amount', field: 'amount'},
-    {headerName: 'Balance', field: 'balance'},
-    {headerName: 'Description', field: 'description'},
-    {headerName: 'Account', field: 'account'}
+    {headerName: 'Type', field: 'Type'},
+    {headerName: 'Date', field: 'Date'},
+    {headerName: 'Amount', field: 'Amount'},
+    {headerName: 'Balance', field: 'Balance'},
+    {headerName: 'Description', field: 'Description'},
+    {headerName: 'Account', field: 'Account'}
 ];
 
 export default class TransactionList extends React.Component{
     constructor(props){
         super(props);
         this.state = {transactions: []};
+        this.onStoreChanged = this.onStoreChanged.bind(this);
+    }
+    componentDidMount(){
+        TransactionStore.listen(this.onStoreChanged);
+        const account = this.props.account;
+        if (account){
+            TransactionActions.list(account.ID);
+        }
+    }
+    componentWillUnmount(){
+        TransactionStore.unlisten(this.onStoreChanged);
+    }
+    componentWillReceiveProps(nextProps){
+        if (nextProps.account){
+            TransactionActions.list.defer(nextProps.account.ID);
+        }
+    }
+    onStoreChanged(state){
+        console.log('TransactionList.onStoreChanged', state);
+        this.setState(state);
     }
     onReady(params){
         this.api = params.api;

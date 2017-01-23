@@ -34,6 +34,7 @@ func InitDB() {
 	Gdb.AutoMigrate(&models.Account{})
 	Gdb.AutoMigrate(&models.Transaction{})
 	db = Gdb
+	db.LogMode(true)
 }
 
 func (c *GormController) Begin() r.Result {

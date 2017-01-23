@@ -59,7 +59,7 @@ export default class TransactionDialog extends React.Component {
                 <View row expand alignStart>
                     <View column>
                         <FormsyText name="description" floatingLabelText="Description"/><br />
-                        <FormsyText name="amount" floatingLabelText="Amount"/><br />
+                        <FormsyText name="amount" floatingLabelText="Amount" required /><br />
                     </View>
                     <View column>
                         <FormsyDate name="date" defaultValue={() => new Date()} floatingLabelText="Date"/>

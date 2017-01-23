@@ -9,4 +9,5 @@ type Account struct {
 	Name			string
 	AccountType 	AccountType
 	AccountTypeID	uint `gorm:"index"`
+	Transactions 	[]Transaction
 }

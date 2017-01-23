@@ -20,6 +20,7 @@ GET  	/api/account_type						AccountTypes.List
 
 # TRANSACTION API
 GET     /api/accounts/:id/transactions          Transactions.List
+POST    /api/accounts/:id/transactions          Transactions.Create
 
 # Ignore favicon requests
 GET     /favicon.ico                            404

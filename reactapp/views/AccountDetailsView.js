@@ -11,6 +11,7 @@ import TransactionDialog from "../components/transaction/TransactionDialog";
 import FlatButton from "material-ui/FlatButton";
 import Popover from "material-ui/Popover";
 import AccountList from "../components/account/AccountList";
+import TransactionActions from "../actions/TransactionActions";
 
 const styles = {
     panel: {
@@ -60,6 +61,10 @@ class AccountDetailsView extends React.Component {
     }
     onAddTransaction(data){
         console.log('AccountDetailsView.onAddTransaction', data);
+        const account = this.state.account;
+        if (account){
+            TransactionActions.create(account.ID, data);
+        }
         this.setState({dialogOpen: false});
     }
     onAccountOpen(account){
