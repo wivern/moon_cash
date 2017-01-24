@@ -69,7 +69,7 @@ export default class AccountList extends React.Component {
                         <MenuItem key="delete" onTouchTap={this.onItemDelete.bind(this, a)} primaryText="Delete" />
                     </IconMenu>
                 ) : null;
-                return <ListItem key={a.ID} primaryText={a.Name} secondaryText="150,000 р."
+                return <ListItem key={a.ID} primaryText={a.Name} secondaryText={a.Balance}
                                  onTouchTap={this.onItemOpen.bind(this, a)}
                                  rightIconButton={rightIconMenu} />
             });

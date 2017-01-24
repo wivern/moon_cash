@@ -33,4 +33,5 @@ type Transaction struct {
 	Account 	Account
 	AccountID	uint   	`gorm:"index"`
 	Type		TransactionType
+	Balance		float64 `gorm:"-" json:",string"`
 }

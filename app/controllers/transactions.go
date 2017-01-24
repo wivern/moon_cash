@@ -16,6 +16,10 @@ func (c Transactions) List(id uint) revel.Result{
 	var account models.Account
 	c.Txn.First(&account, id)
 	c.Txn.Model(&account).Preload("Account").Order("Date desc").Related(&transactions)
+	for i, T := range transactions {
+		value := balanceService.BalanceTran(c.Txn, T)
+		transactions[i].Balance = value
+	}
 	return c.RenderJson(transactions)
 }
 
