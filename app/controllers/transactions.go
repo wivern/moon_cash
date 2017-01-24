@@ -15,8 +15,7 @@ func (c Transactions) List(id uint) revel.Result{
 	var transactions []models.Transaction
 	var account models.Account
 	c.Txn.First(&account, id)
-	c.Txn.Model(&account).Related(&transactions)
-//	c.Txn.Preload("Transaction").Find(&transactions)
+	c.Txn.Model(&account).Preload("Account").Order("Date desc").Related(&transactions)
 	return c.RenderJson(transactions)
 }
 

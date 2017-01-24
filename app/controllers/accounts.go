@@ -5,7 +5,10 @@ import (
 	"encoding/json"
 	"github.com/revel/revel"
 	"github.com/wivern/moon_cash/app/models"
+	"github.com/wivern/moon_cash/app/services"
 )
+
+var balanceService *services.BalanceService = new(services.BalanceService)
 
 type Accounts struct {
 	GormController
@@ -19,6 +22,12 @@ type DeleteResponse struct {
 func (c Accounts) List() revel.Result {
 	var accounts []models.Account
 	c.Txn.Preload("AccountType").Find(&accounts)
+	revel.INFO.Print("List accounts")
+	for i, account := range accounts {
+		value := balanceService.Balance(c.Txn, account)
+		revel.TRACE.Print("Value: %f", value)
+		accounts[i].Balance = value
+	}
 	return c.RenderJson(accounts)
 }
 
