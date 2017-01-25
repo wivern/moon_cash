@@ -83,6 +83,7 @@ class AccountDetailsView extends React.Component {
                 <FlatButton labelStyle={{color: '#1565C8'}} style={{marginLeft: '10px'}}
                             onTouchTap={this.onPopover.bind(this)}
                             label={account.Name} />
+                <span>{account.Balance}</span>
             </div> : null;
 
         return <div className="fullheight">

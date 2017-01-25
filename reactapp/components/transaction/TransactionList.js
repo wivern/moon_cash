@@ -4,14 +4,27 @@ import React from "react";
 import {AgGridReact} from "ag-grid-react";
 import TransactionActions from "../../actions/TransactionActions";
 import TransactionStore from "../../stores/TransactionStore";
+import format from "date-format";
 
 const columns = [
     {headerName: 'Type', field: 'Type'},
-    {headerName: 'Date', field: 'Date'},
-    {headerName: 'Amount', field: 'Amount'},
+    {headerName: 'Date', field: 'Date',
+        cellRenderer: params => format.asString("dd.MM", new Date(params.value))},
+    {headerName: 'Amount', field: 'Amount', cellStyle: params => {
+        const type = params.data.type;
+        switch(type){
+            case 'income':
+                return {color: 'green'};
+            case 'expense':
+                return {color: 'red'};
+        }
+    }},
     {headerName: 'Balance', field: 'Balance'},
     {headerName: 'Description', field: 'Description'},
-    {headerName: 'Account', field: 'Account'}
+    {headerName: 'Account', field: 'Account', cellRenderer: params => {
+        console.log('render', params.value);
+        return params.value.Name;
+    }}
 ];
 
 export default class TransactionList extends React.Component{

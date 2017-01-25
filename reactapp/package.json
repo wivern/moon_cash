@@ -13,6 +13,7 @@
     "ag-grid-react": "7.0.0",
     "alt": "~0.18.2",
     "alt-utils": "^1.0.0",
+    "date-format" : "~1.0.0",
     "formsy-material-ui": "~0.5.3",
     "formsy-react": "~0.18.1",
     "material-ui": "~0.16.2",
