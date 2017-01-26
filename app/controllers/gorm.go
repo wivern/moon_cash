@@ -7,6 +7,7 @@ import (
 	r "github.com/revel/revel"
 	// YOUR APP NAME
 	"github.com/wivern/moon_cash/app/models"
+	"github.com/wivern/moon_cash/app/services"
 	"database/sql"
 	"fmt"
 )
@@ -17,6 +18,7 @@ type GormController struct {
 }
 
 var db *gorm.DB
+var balanceService *services.BalanceService = new(services.BalanceService)
 
 func InitDB() {
 	var err error

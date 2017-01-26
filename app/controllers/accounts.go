@@ -5,10 +5,7 @@ import (
 	"encoding/json"
 	"github.com/revel/revel"
 	"github.com/wivern/moon_cash/app/models"
-	"github.com/wivern/moon_cash/app/services"
 )
-
-var balanceService *services.BalanceService = new(services.BalanceService)
 
 type Accounts struct {
 	GormController
