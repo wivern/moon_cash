@@ -12,6 +12,7 @@ import FlatButton from "material-ui/FlatButton";
 import Popover from "material-ui/Popover";
 import AccountList from "../components/account/AccountList";
 import TransactionActions from "../actions/TransactionActions";
+import {FormattedNumber} from "react-intl";
 
 const styles = {
     panel: {
@@ -83,7 +84,7 @@ class AccountDetailsView extends React.Component {
                 <FlatButton labelStyle={{color: '#1565C8'}} style={{marginLeft: '10px'}}
                             onTouchTap={this.onPopover.bind(this)}
                             label={account.Name} />
-                <span>{account.Balance}</span>
+                <FormattedNumber value={account.Balance} minimumFractionDigits={2} style="decimal" />
             </div> : null;
 
         return <div className="fullheight">
