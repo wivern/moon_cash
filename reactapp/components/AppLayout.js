@@ -10,11 +10,31 @@ import MenuItem from "material-ui/MenuItem";
 import DashboardIcon from "material-ui/svg-icons/action/dashboard";
 import AccountIcon from "material-ui/svg-icons/action/account-balance-wallet";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
+import UserActions from "../actions/UserActions";
+import UserStore from "../stores/UserStore";
+import Avatar from "material-ui/Avatar";
+import UserIcon from "material-ui/svg-icons/social/person";
+import AuthenticatedContainer from "./AuthenticatedContainer";
 
 class AppLayout extends React.Component {
     constructor(props, context) {
         super(props, context);
         this.state = {open: false};
+        this.onUserStoreChanged = this.onUserStoreChanged.bind(this);
+    }
+
+    componentDidMount(){
+        UserStore.listen(this.onUserStoreChanged);
+        UserActions.currentUser();
+    }
+
+    componentWillUnmount(){
+        UserStore.unlisten(this.onUserStoreChanged);
+    }
+
+    onUserStoreChanged(state){
+        console.log('AppLayout.onUserStoreChanged', state);
+        this.setState(state);
     }
 
     onMenu() {
@@ -30,8 +50,20 @@ class AppLayout extends React.Component {
     }
 
     getChildContext(){
+        const user = this.state.user;
         return {
-            muiTheme: getMuiTheme()
+            muiTheme: getMuiTheme(),
+            user: user
+        }
+    }
+
+    renderUser(){
+        const user = this.state.user;
+        if (user){
+            return <ToolbarGroup lastChild={true}>
+                <Avatar icon={<UserIcon />} />
+                <ToolbarTitle style={{marginLeft: '10px'}} text={user.Login} />
+            </ToolbarGroup>;
         }
     }
 
@@ -52,16 +84,20 @@ class AppLayout extends React.Component {
                         <IconButton onTouchTap={this.onMenu.bind(this)}><MenuIcon /></IconButton>
                         <ToolbarTitle text="MOON CASH" />
                     </ToolbarGroup>
+                    {this.renderUser()}
                 </Toolbar>
             </MuiThemeProvider>
+            <AuthenticatedContainer>
             {childrenWithProps}
+            </AuthenticatedContainer>
         </div>;
     }
 }
 
 AppLayout.childContextTypes = {
     muiTheme: React.PropTypes.object,
-    history: React.PropTypes.object
+    history: React.PropTypes.object,
+    user: React.PropTypes.object
 };
 
 AppLayout.contextTypes = {

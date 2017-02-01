@@ -35,6 +35,8 @@ func InitDB() {
 	Gdb.AutoMigrate(&models.AccountType{})
 	Gdb.AutoMigrate(&models.Account{})
 	Gdb.AutoMigrate(&models.Transaction{})
+	Gdb.AutoMigrate(&models.Role{})
+	Gdb.AutoMigrate(&models.User{})
 	db = Gdb
 	db.LogMode(true)
 }
@@ -72,4 +74,14 @@ func (c*GormController) Rollback() r.Result {
 	c.Txn = nil
 	return nil
 
+}
+
+func (c *GormController) CurrentUser() *models.User{
+	var user models.User
+	userName := c.Session["user"]
+	if len(userName) > 0{
+		c.Txn.Where("login = ?", userName).First(&user)
+		return &user
+	}
+	return nil
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Moon Cash Signin</title>
+    <link rel="stylesheet" href="/public/css/login.css" type="text/css" />
+    <script src="/public/js/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+    <div class="login-page">
+        <div class="form">
+            <div id="message" class="container error">
+                <div class="info"><span class="fa">Invalid login or password</span></div>
+            </div>
+            <form action="/signup" method="POST" class="register-form">
+                <input name="login" maxlength="32" type="text" placeholder="name"/>
+                <input name="password" type="password" placeholder="password"/>
+                <input name="email" type="email" placeholder="email address"/>
+                <button>create</button>
+                <p class="message">Already registered? <a href="#">Sign In</a></p>
+            </form>
+            <form action="/login" method="POST" class="login-form">
+                <input name="login" type="text" maxlength="32" placeholder="username"/>
+                <input name="password" type="password" placeholder="password"/>
+                <button>login</button>
+                <p class="message">Not registered? <a href="#">Create an account</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="/public/js/login.js"></script>
+</body>
+</html>

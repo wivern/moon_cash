@@ -46,6 +46,7 @@ class AccountView extends React.Component {
         return <div className="view">
             <muiThemeProvider>
                 <AccountList
+                    user={this.context.user}
                     onOpen={this.onOpenAccount.bind(this)}
                     onDelete={this.onDeleteAccount.bind(this)}/>
             </muiThemeProvider>
@@ -61,7 +62,8 @@ class AccountView extends React.Component {
 }
 
 AccountView.contextTypes = {
-    router: React.PropTypes.object
+    router: React.PropTypes.object,
+    user: React.PropTypes.object
 };
 
 export default AccountView;

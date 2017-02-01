@@ -111,7 +111,8 @@ class AccountDetailsView extends React.Component {
 }
 
 AccountDetailsView.contextTypes = {
-    router: React.PropTypes.object
+    router: React.PropTypes.object,
+    user: React.PropTypes.object
 };
 
 export default AccountDetailsView;

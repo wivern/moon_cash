@@ -8,6 +8,12 @@ GET     /                                       App.Index
 GET     /accounts                               App.Index
 GET     /accounts/:id                           App.Index
 
+GET     /signin                                 Authenticate.Signin
+POST    /login                                  Authenticate.Login
+POST    /signup                                 Authenticate.Signup
+
+GET     /api/users/current                      Authenticate.Current
+
 # ACCOUNTS API
 GET     /api/accounts                           Accounts.List
 POST    /api/accounts                           Accounts.Create

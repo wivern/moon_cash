@@ -13,6 +13,7 @@ import "./css/main.scss";
 import "ag-grid-root/dist/styles/ag-grid.css";
 import "ag-grid-root/dist/styles/theme-material.css";
 import {IntlProvider} from "react-intl";
+import LoginForm from "./components/LoginForm";
 
 injectTapEventPlugin();
 
@@ -41,6 +42,7 @@ class App extends React.Component{
                     <Route path=":id" component={IntlDetailsView} />
                 </Route>
             </Route>
+            <Route path="/login" component={LoginForm} />
         </Router>;
     }
 }

@@ -3,6 +3,7 @@ package app
 import (
 	"github.com/revel/revel"
 	_ "github.com/lib/pq"
+	"github.com/wivern/moon_cash/app/filters"
 )
 
 func init() {
@@ -14,6 +15,7 @@ func init() {
 		revel.ParamsFilter,            // Parse parameters into Controller.Params.
 		revel.SessionFilter,           // Restore and write the session cookie.
 		revel.FlashFilter,             // Restore and write the flash cookie.
+		filters.AuthFiler,
 		revel.ValidationFilter,        // Restore kept validation errors and save new ones from cookie.
 		revel.I18nFilter,              // Resolve the requested language
 		HeaderFilter,                  // Add some security based headers
